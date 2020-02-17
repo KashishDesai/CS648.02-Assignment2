@@ -6,6 +6,7 @@ class ProductList extends React.Component {
     }
 
     createProduct(product) {
+        product.id = new Date().getTime();
         const newProducts = this.state.products.slice();
         newProducts.push(product)
         this.setState({ products: newProducts });
@@ -27,7 +28,7 @@ class ProductList extends React.Component {
 }
 
 function ProductTable(props) {
-    const productRows = props.products.map((product, index) => <ProductRow key={new Date().getTime()} product={product} />);
+    const productRows = props.products.map((product) => <ProductRow key={product.id} product={product} />);
 
     return (
         <div >
@@ -56,7 +57,6 @@ class ProductAdd extends React.Component {
         e.preventDefault();
         const form = document.forms.productAddForm
         const price = form.productPrice.value
-        console.log(price.substring(1, price.length));
         const product = { product_name: form.productName.value, product_price: price.substring(1, price.length), product_category: form.productCategory.value, product_image: form.productImage.value }
         this.props.createProduct(product)
         form.productName.value = "";
